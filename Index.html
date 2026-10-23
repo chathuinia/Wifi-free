@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School Free — Wi-Fi</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;
+       display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+  .card{background:#1e293b;padding:28px;border-radius:16px;max-width:360px;width:90%;
+        box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center}
+  h1{margin:0 0 6px;font-size:22px}
+  p{color:#94a3b8;font-size:14px;margin:0 0 18px}
+  input{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;
+        background:#0f172a;color:#e2e8f0;font-size:16px;box-sizing:border-box;margin-bottom:12px}
+  button{width:100%;padding:12px;border:0;border-radius:10px;background:#22c55e;
+         color:#052e16;font-weight:700;font-size:16px;cursor:pointer}
+  button:active{transform:scale(.98)}
+  .result{margin-top:16px;padding:14px;border-radius:10px;background:#0f172a;
+          border:1px dashed #22c55e;display:none;text-align:left;font-size:15px}
+  .result b{color:#22c55e}
+  .err{color:#f87171;font-size:14px;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>School Free</h1>
+  <p>Первый день — бесплатно. Введи код с листочка 👇</p>
+  <input id="code" placeholder="Код доступа" autocomplete="off">
+  <button onclick="check()">Подключиться</button>
+  <div class="err" id="err">Неверный код 🙃</div>
+  <div class="result" id="res">
+    <div>Сеть: <b>School Free</b></div>
+    <div>Пароль: <b>56788907</b></div>
+    <div style="margin-top:6px;color:#94a3b8;font-size:13px">Действует 24 часа</div>
+  </div>
+</div>
+<script>
+  // коды, которые ты пишешь на листочках
+  const CODES = ["SCHOOL2026", "FREE1DAY", "PROMO42"];
+  function check(){
+    const v = document.getElementById('code').value.trim().toUpperCase();
+    const ok = CODES.includes(v);
+    document.getElementById('err').style.display = ok ? 'none' : 'block';
+    document.getElementById('res').style.display = ok ? 'block' : 'none';
+  }
+</script>
+</body>
+</html>
