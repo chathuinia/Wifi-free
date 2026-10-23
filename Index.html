@@ -5,44 +5,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>School Free — Wi-Fi</title>
 <style>
-  body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;
-       display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
-  .card{background:#1e293b;padding:28px;border-radius:16px;max-width:360px;width:90%;
-        box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center}
-  h1{margin:0 0 6px;font-size:22px}
-  p{color:#94a3b8;font-size:14px;margin:0 0 18px}
-  input{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;
-        background:#0f172a;color:#e2e8f0;font-size:16px;box-sizing:border-box;margin-bottom:12px}
-  button{width:100%;padding:12px;border:0;border-radius:10px;background:#22c55e;
-         color:#052e16;font-weight:700;font-size:16px;cursor:pointer}
-  button:active{transform:scale(.98)}
-  .result{margin-top:16px;padding:14px;border-radius:10px;background:#0f172a;
-          border:1px dashed #22c55e;display:none;text-align:left;font-size:15px}
-  .result b{color:#22c55e}
-  .err{color:#f87171;font-size:14px;margin-top:8px;display:none}
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(circle at 20% 20%,#1e3a8a 0%,#0f172a 45%,#020617 100%);
+    color:#e2e8f0;padding:20px;
+  }
+  .card{
+    width:100%;max-width:380px;
+    background:rgba(30,41,59,.75);
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(148,163,184,.2);
+    border-radius:24px;padding:32px 26px;
+    box-shadow:0 25px 60px rgba(0,0,0,.55);
+    text-align:center;
+    animation:in .5s ease;
+  }
+  @keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .logo{
+    width:74px;height:74px;margin:0 auto 16px;border-radius:22px;
+    background:linear-gradient(135deg,#22c55e,#0ea5e9);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(34,197,94,.35);
+  }
+  .logo svg{width:40px;height:40px;fill:#04140a}
+
+  h1{margin:0 0 6px;font-size:24px;letter-spacing:.3px}
+  .sub{color:#94a3b8;font-size:14px;margin:0 0 22px;line-height:1.45}
+
+  input{
+    width:100%;padding:14px 16px;border-radius:14px;
+    border:1px solid #334155;background:#0b1220;color:#e2e8f0;
+    font-size:16px;outline:none;margin-bottom:12px;
+    transition:border .2s, box-shadow .2s;
+  }
+  input::placeholder{color:#64748b}
+  input:focus{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+
+  button{
+    width:100%;padding:14px;border:0;border-radius:14px;
+    font-size:16px;font-weight:700;cursor:pointer;
+    transition:transform .12s, filter .2s;
+  }
+  button:active{transform:scale(.97)}
+
+  .btn-main{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#04140a;margin-bottom:10px;
+    box-shadow:0 8px 24px rgba(34,197,94,.35);
+  }
+  .btn-main:hover{filter:brightness(1.07)}
+
+  .btn-free{
+    background:transparent;color:#7dd3fc;
+    border:1.5px solid #0ea5e9;
+  }
+  .btn-free:hover{background:rgba(14,165,233,.12)}
+
+  .err{color:#f87171;font-size:14px;margin-top:12px;display:none}
+
+  .result{
+    display:none;margin-top:20px;padding:18px;border-radius:16px;
+    background:rgba(15,23,42,.9);
+    border:1px solid rgba(34,197,94,.45);
+    text-align:left;animation:in .35s ease;
+  }
+  .row{display:flex;justify-content:space-between;align-items:center;
+       padding:8px 0;font-size:15px}
+  .row + .row{border-top:1px solid rgba(148,163,184,.15)}
+  .label{color:#94a3b8}
+  .val{font-weight:700;color:#22c55e;font-family:ui-monospace,monospace;font-size:16px}
+
+  .hint{margin-top:12px;font-size:13px;color:#94a3b8;text-align:center}
 </style>
 </head>
 <body>
 <div class="card">
+  <div class="logo">
+    <svg viewBox="0 0 24 24"><path d="M12 21l3.5-4.2a5.5 5.5 0 0 0-7 0L12 21zm0-15.5c-3.6 0-6.9 1.4-9.4 3.7l1.9 2.2A11.4 11.4 0 0 1 12 8.3c2.8 0 5.4 1.1 7.5 2.9l1.9-2.2A14.4 14.4 0 0 0 12 5.5zm0 5.2c-2.1 0-4 .8-5.5 2.1l1.9 2.2A5.6 5.6 0 0 1 12 13.5c1.4 0 2.6.5 3.6 1.3l1.9-2.2A8.4 8.4 0 0 0 12 10.7z"/></svg>
+  </div>
+
   <h1>School Free</h1>
-  <p>Первый день — бесплатно. Введи код с листочка 👇</p>
+  <p class="sub">Бесплатный Wi-Fi для своих.<br>Введи код с листочка или жми «Первый день бесплатно» 👇</p>
+
   <input id="code" placeholder="Код доступа" autocomplete="off">
-  <button onclick="check()">Подключиться</button>
+  <button class="btn-main" onclick="check()">Подключиться</button>
+  <button class="btn-free" onclick="show()">Первый день бесплатно</button>
+
   <div class="err" id="err">Неверный код 🙃</div>
+
   <div class="result" id="res">
-    <div>Сеть: <b>School Free</b></div>
-    <div>Пароль: <b>56788907</b></div>
-    <div style="margin-top:6px;color:#94a3b8;font-size:13px">Действует 24 часа</div>
+    <div class="row"><span class="label">Сеть</span><span class="val">School Free</span></div>
+    <div class="row"><span class="label">Пароль</span><span class="val">56788907</span></div>
+    <div class="hint">Действует 24 часа ⏳</div>
   </div>
 </div>
+
 <script>
-  // коды, которые ты пишешь на листочках
+  // коды, которые пишешь на листочках
   const CODES = ["SCHOOL2026", "FREE1DAY", "PROMO42"];
+
+  function show(){
+    document.getElementById('err').style.display = 'none';
+    document.getElementById('res').style.display = 'block';
+  }
+
   function check(){
     const v = document.getElementById('code').value.trim().toUpperCase();
-    const ok = CODES.includes(v);
-    document.getElementById('err').style.display = ok ? 'none' : 'block';
-    document.getElementById('res').style.display = ok ? 'block' : 'none';
+    if (CODES.includes(v)) {
+      show();
+    } else {
+      document.getElementById('res').style.display = 'none';
+      document.getElementById('err').style.display = 'block';
+    }
   }
 </script>
 </body>
